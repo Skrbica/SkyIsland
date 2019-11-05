@@ -18,6 +18,7 @@ public class CameraController {
 	private static final double MIN_FLICK_PIXELS = 3;
     private static final double MOVEMENT = 1;
     private static final double MOVEMENT_ROT = 1.5;
+    private static final double MOVEMENT_Y = 0.5;
     
     
     TranslateTransition transition = new TranslateTransition();
@@ -76,9 +77,9 @@ public class CameraController {
 			} else if (character.equals("s")) {
                 camera.setTranslateZ(camera.getTranslateZ() - MOVEMENT);
 			} else if (character.equalsIgnoreCase("z")) {
-				camera.setTranslateY(camera.getTranslateY() + MOVEMENT);
+				camera.setTranslateY(camera.getTranslateY() + MOVEMENT_Y);
 			} else if (character.equalsIgnoreCase("x")) {
-				camera.setTranslateY(camera.getTranslateY() - MOVEMENT);
+				camera.setTranslateY(camera.getTranslateY() - MOVEMENT_Y);
 			}
 		});
 		

@@ -3,8 +3,8 @@ package models;
 public class Tree extends Model {
 	
 	public Tree() {
-		setPath("./files/trees/part.obj");
-		this.scale = 0.5;
+		setPath("./files/tree/Tree low.obj");
+		this.scale = 0.05;
 	}
 	
 	@Override
