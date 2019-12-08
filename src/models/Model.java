@@ -13,63 +13,22 @@ import javafx.scene.transform.Translate;
 
 public abstract class Model {
 	//private Group modelNode;
-	private double xmin, xmax, zmin, zmax;
 	private String path;
 	protected double scale;
+	protected double translateY = 0;
+	private double fieldPositionX, fieldPositionY;
 	
 	//multiple objects of same type
 	//idea is not to load model twice
 	protected List<Node> objects = new ArrayList<>();
 	
-	public abstract void calculateBase();
-	
-	public abstract void configureModel();
-	
-	public void translateBase(double x, double y, double z) {
-		xmin += x;
-		xmax += x;
-		zmin += z;
-		zmax += z;
+	public Model(double x, double y) {
+		this.fieldPositionX = x;
+		this.fieldPositionY = y;
 	}
-
-	/*public Group getModelNode() {
-		return this.modelNode;
-	}*/
 	
 	public void setPath(String path) {
 		this.path = path;
-	}
-
-	public double getXmin() {
-		return this.xmin;
-	}
-
-	public void setXmin(double xmin) {
-		this.xmin = xmin;
-	}
-
-	public double getXmax() {
-		return this.xmax;
-	}
-
-	public void setXmax(double xmax) {
-		this.xmax = xmax;
-	}
-
-	public double getZmin() {
-		return this.zmin;
-	}
-
-	public void setZmin(double zmin) {
-		this.zmin = zmin;
-	}
-
-	public double getZmax() {
-		return this.zmax;
-	}
-
-	public void setZmax(double zmax) {
-		this.zmax = zmax;
 	}
 	
 	public List<Node> getObjects(){
@@ -92,10 +51,25 @@ public abstract class Model {
 	public void addNode(TransformationParameters tp) {
 		Group newNode = loadModel();
 		
-		newNode.getTransforms().addAll(new Translate(tp.getX(), tp.getY(), tp.getZ()),
+		newNode.getTransforms().addAll(new Translate(tp.getX(), tp.getY() + translateY, tp.getZ()),
 				new Scale(tp.getScale(), tp.getScale(), tp.getScale()),
 				new Rotate(90 * tp.getRot()));
-		
 		objects.add(newNode);
+	}
+
+	public double getFieldPositionX() {
+		return fieldPositionX;
+	}
+
+	public void setFieldPositionX(double fieldPositionX) {
+		this.fieldPositionX = fieldPositionX;
+	}
+
+	public double getFieldPositionY() {
+		return fieldPositionY;
+	}
+
+	public void setFieldPositionY(double fieldPositionY) {
+		this.fieldPositionY = fieldPositionY;
 	}
 }

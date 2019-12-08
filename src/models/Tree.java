@@ -2,21 +2,9 @@ package models;
 
 public class Tree extends Model {
 	
-	public Tree() {
+	public Tree(double fieldPosX, double fieldPosY) {
+		super(fieldPosX, fieldPosY);
 		setPath("./files/tree/Tree low.obj");
-		this.scale = 0.05;
+		this.scale = 0.07;
 	}
-	
-	@Override
-	public void calculateBase() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void configureModel() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

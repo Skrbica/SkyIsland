@@ -4,21 +4,23 @@ import javafx.animation.TranslateTransition;
 import javafx.geometry.Point3D;
 import javafx.scene.Camera;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
+import models.Platform;
 
 public class CameraController {
 	
 	private Scene scene;
 	private Camera camera;
 	private Group root;
-	private double lastXPosition, lastYPosition;
-	private Point3D rotateUpDown;
+	private double lastXPosition;
 	
 	private static final double MIN_FLICK_PIXELS = 3;
     private static final double MOVEMENT = 1;
     private static final double MOVEMENT_ROT = 1.5;
-    private static final double MOVEMENT_Y = 0.5;
+    
     
     
     TranslateTransition transition = new TranslateTransition();
@@ -28,45 +30,34 @@ public class CameraController {
 		this.scene = scene;
 		this.camera = camera;
 		this.root = root;
-		//rotateUpDown = new Point3D(0, 0, 0);
 		listen();
 	}
 
 	public void listen() {
 		scene.setOnMouseClicked(e -> {
 			lastXPosition = e.getSceneX();
-			lastYPosition = e.getSceneY();
+			
+			Node node = e.getPickResult().getIntersectedNode();
+			if (node instanceof Box) {
+				Platform.fieldSelected(node);
+			}
 		});
 		
 		scene.setOnMouseDragged(e -> {
-			 double currentY = e.getSceneY();
 			 double currentX = e.getSceneX();
             if (currentX - lastXPosition > MIN_FLICK_PIXELS) {
                 root.getTransforms().add(new Rotate(-MOVEMENT_ROT, new Point3D(0,1,0)));
                 lastXPosition = currentX;
-                //rotateUpDown.add(new Point3D(MOVEMENT_ROT/360, 0, MOVEMENT_ROT/360));
             }
 
             else if (currentX - lastXPosition < -MIN_FLICK_PIXELS) {
                 root.getTransforms().add(new Rotate(MOVEMENT_ROT, new Point3D(0,1,0)));
                 lastXPosition = currentX;
-                //rotateUpDown.add(new Point3D(-MOVEMENT_ROT/360, 0, -MOVEMENT_ROT/360));
             }
-            
-            /*if (currentY - lastYPosition > MIN_FLICK_PIXELS) {
-                root.getTransforms().add(new Rotate(MOVEMENT_ROT, rotateUpDown));
-                lastYPosition = currentY;
-            }
-
-            else if (currentY - lastYPosition < -MIN_FLICK_PIXELS) {
-                root.getTransforms().add(new Rotate(-MOVEMENT_ROT, rotateUpDown));
-                lastYPosition = currentY;
-            }*/
-            
 		});
 		
 		scene.setOnKeyPressed(e -> {
-			String character = e.getText();
+			/*String character = e.getText();
 			
 			if(character.equals("a")) {
                 camera.setTranslateX(camera.getTranslateX() - MOVEMENT);
@@ -80,7 +71,7 @@ public class CameraController {
 				camera.setTranslateY(camera.getTranslateY() + MOVEMENT_Y);
 			} else if (character.equalsIgnoreCase("x")) {
 				camera.setTranslateY(camera.getTranslateY() - MOVEMENT_Y);
-			}
+			}*/
 		});
 		
 		scene.setOnMouseReleased(e -> {

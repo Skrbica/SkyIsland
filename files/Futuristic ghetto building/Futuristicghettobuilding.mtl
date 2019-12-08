@@ -1,0 +1,76 @@
+# Blender MTL File: 'Futuristicghettobuilding_one_Mesh.blend'
+# Material Count: 6
+
+newmtl Doors_and_Windows
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.788080 0.788080 0.788080
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd textures\House_col.png
+map_Bump  textures\\Building_1_Nor.jpg
+
+newmtl House
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.514918 0.300544 0.181164
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd House_col.png
+map_Bump  textures\\Building_1_Nor.jpg
+
+newmtl Ladder
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.042158 0.042158 0.042158
+Ks 0.384106 0.384106 0.384106
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\Building_1_AO.jpg
+
+newmtl Tubes_and_Pipes
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.046336 0.046336 0.046336
+Ks 0.089655 0.089655 0.089655
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd gitter_col.png
+map_Bump  textures\\gitter_nor.jpg
+
+newmtl fan
+Ns 37.254902
+Ka 1.000000 1.000000 1.000000
+Kd 0.703226 0.730019 0.638069
+Ks 0.780144 0.780144 0.780144
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\Fan_C.jpg
+map_Bump  textures\\Fan_N.jpg
+map_Ks  textures\\Fan_S.jpg
+
+newmtl satellite_dishes
+Ns 37.254902
+Ka 1.000000 1.000000 1.000000
+Kd 0.098840 0.098840 0.098840
+Ks 0.709150 0.709150 0.709150
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\Satellite_dish_Col.jpg
+map_Bump  textures\\Satellite_dish_NOR2.jpg
+map_Ks  textures\\Satellite_dish_Col.jpg
+refl  textures\\REF 1.jpg
