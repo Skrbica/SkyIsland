@@ -87,4 +87,15 @@ public class Platform {
 			Platform.select();
 		}
 	}
+	
+	public TransformationParameters getSelectedFieldTransforms() {
+		double x = net.getSelectedX() * fieldDimension;
+		double z = net.getSelectedY() * fieldDimension;
+		TransformationParameters tp = new TransformationParameters(x, 0, z, 0, 0);
+		return tp;
+	}
+	
+	public boolean isSelected() {
+		return net.isSelected();
+	}
 }

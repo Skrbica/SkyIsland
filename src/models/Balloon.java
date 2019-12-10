@@ -2,17 +2,24 @@ package models;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 
 public class Balloon extends Model {
 	private static final double heightBeg = 10;
 	private static final double heightEnd = 20;
 	private static final double flightTime = 10;
 	private double startTime;
+	private Node balloon;
+	private Group root;
 	
-	public Balloon(double fieldPosX, double fieldPosY) {
-		super(fieldPosX, fieldPosY);
+	public Balloon(double fieldPosX, double fieldPosY, Group root) {
+		super(fieldPosX, fieldPosY, root);
+		this.root = root;
 		setPath("./files/Hot Air Balloon Iridesium/Air_Balloon.obj");
 		this.scale = 0.2;
+		balloon = loadModel();
 	}
 	
 	private double calculateHeight(double time) {
@@ -25,22 +32,11 @@ public class Balloon extends Model {
 	}
 	
 	public void update(double time, Group root) {
-		boolean flying = false;
-
-		Node balloon = getObjects().get(0);
-		if(time % 60.0 < 10.0) {
-			if(!root.getChildren().contains(balloon)) {
-				flying = true;
-				root.getChildren().addAll(getObjects());
-				setTime(time);
-			} else {
-				update(time);	
-			}
+		if(!root.getChildren().contains(balloon)) {
+			root.getChildren().addAll(getBalloon());
+			setTime(time);
 		} else {
-			if(flying) {
-				root.getChildren().remove(balloon);
-			}
-			flying = false;
+			update(time);	
 		}
 	}
 	
@@ -54,6 +50,19 @@ public class Balloon extends Model {
 	}
 	
 	public Node getBalloon() {
-		return getObjects().get(0);
+		return balloon;
+	}
+	
+	public void remove() {
+		root.getChildren().remove(balloon);
+	}
+	
+	@Override
+	public void addNode(TransformationParameters tp) {
+		balloon.getTransforms().clear();
+		balloon.getTransforms().addAll(new Translate(tp.getX(), tp.getY() + translateY, tp.getZ()),
+				new Scale(tp.getScale(), tp.getScale(), tp.getScale()),
+				new Rotate(90 * tp.getRot()));
+		root.getChildren().add(balloon);
 	}
 }

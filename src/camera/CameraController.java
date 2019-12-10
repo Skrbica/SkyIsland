@@ -4,11 +4,8 @@ import javafx.animation.TranslateTransition;
 import javafx.geometry.Point3D;
 import javafx.scene.Camera;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
-import models.Platform;
 
 public class CameraController {
 	
@@ -34,14 +31,6 @@ public class CameraController {
 	}
 
 	public void listen() {
-		scene.setOnMouseClicked(e -> {
-			lastXPosition = e.getSceneX();
-			
-			Node node = e.getPickResult().getIntersectedNode();
-			if (node instanceof Box) {
-				Platform.fieldSelected(node);
-			}
-		});
 		
 		scene.setOnMouseDragged(e -> {
 			 double currentX = e.getSceneX();

@@ -1,5 +1,8 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import camera.CameraController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -13,6 +16,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import models.Balloon;
 import models.House;
+import models.Model;
 import models.Platform;
 import models.Tree;
 
@@ -21,13 +25,27 @@ public class App extends Application {
 	Balloon balloons;
 	Group root;
 	Scene scene;
+	boolean flying = false;
 	
 	AnimationTimer animationTimer = new AnimationTimer() {
 		@Override
 		public void handle(long now) {
 			double time = now/1e9;
 
-			balloons.update(time, root);
+			//balloon
+			if(time % 20.0 < 10.0) {
+				if(!flying) {
+					flying = true;
+				}
+				balloons.update(time, root);
+			} else {
+				if(flying) {
+					balloons.remove();
+					flying = false;
+				}
+			}
+			
+			//background
 			scene.setFill(background(time));
 		}
 	};
@@ -50,18 +68,18 @@ public class App extends Application {
 		Platform platform = new Platform(10);
 		root.getChildren().addAll(platform.getNode());
 		
-		Tree trees = new Tree(0, 0);
+		Tree trees = new Tree(0, 0, root);
 		for(int i = 0; i < 5; i++) {
 			trees.addNode(i*10, 0, i*10, 0);
 		}
-		root.getChildren().addAll(trees.getObjects());
+		//root.getChildren().addAll(trees.getObjects());
 		
-		balloons = new Balloon(0, 0);
+		balloons = new Balloon(0, 0, root);
 		balloons.addNode(-10, -1, -10, 0);
 		
-		House houses = new House(0, 0);
+		House houses = new House(0, 0, root);
 		houses.addNode(-20, 0, -20, 0);
-		root.getChildren().addAll(houses.getObjects());
+		//root.getChildren().addAll(houses.getObjects());
 		
 		/* ====== Camera ========================================================================== */
 
@@ -92,6 +110,10 @@ public class App extends Application {
 		primaryStage.show();
 
 		new CameraController(scene, camera, root);
+		List<Model> models = new ArrayList<Model>();
+		models.add(trees);
+		models.add(houses);
+		new Events(scene, models, platform);
 		animationTimer.start();
 	}
 	

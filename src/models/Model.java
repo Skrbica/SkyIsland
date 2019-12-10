@@ -6,35 +6,26 @@ import java.util.List;
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
 public abstract class Model {
-	//private Group modelNode;
 	private String path;
 	protected double scale;
 	protected double translateY = 0;
 	private double fieldPositionX, fieldPositionY;
+	private Group root;
 	
-	//multiple objects of same type
-	//idea is not to load model twice
-	protected List<Node> objects = new ArrayList<>();
-	
-	public Model(double x, double y) {
+	public Model(double x, double y, Group root) {
 		this.fieldPositionX = x;
 		this.fieldPositionY = y;
+		this.root = root;
 	}
 	
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	public List<Node> getObjects(){
-		return objects;
-	}
-	
 	public Group loadModel() {
 		ObjModelImporter importer = new ObjModelImporter();
 		importer.read(path);
@@ -50,11 +41,10 @@ public abstract class Model {
 	
 	public void addNode(TransformationParameters tp) {
 		Group newNode = loadModel();
-		
 		newNode.getTransforms().addAll(new Translate(tp.getX(), tp.getY() + translateY, tp.getZ()),
 				new Scale(tp.getScale(), tp.getScale(), tp.getScale()),
 				new Rotate(90 * tp.getRot()));
-		objects.add(newNode);
+		root.getChildren().add(newNode);
 	}
 
 	public double getFieldPositionX() {

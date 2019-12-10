@@ -48,4 +48,8 @@ public class PlatformNet {
 	public int getSelectedY() {
 		return selectedY;
 	}
+	
+	public boolean isSelected() {
+		return selectedX != dimension;
+	}
 }
