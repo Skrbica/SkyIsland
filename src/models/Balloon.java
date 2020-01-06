@@ -8,7 +8,7 @@ import javafx.scene.transform.Translate;
 
 public class Balloon extends Model {
 	private static final double heightBeg = 10;
-	private static final double heightEnd = 20;
+	private static final double heightEnd = 30;
 	private static final double flightTime = 10;
 	private double startTime;
 	private Node balloon;

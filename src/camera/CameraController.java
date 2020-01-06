@@ -4,7 +4,9 @@ import javafx.animation.TranslateTransition;
 import javafx.geometry.Point3D;
 import javafx.scene.Camera;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.transform.Rotate;
 
 public class CameraController {
@@ -23,8 +25,8 @@ public class CameraController {
     TranslateTransition transition = new TranslateTransition();
 	
 	
-	public CameraController(Scene scene, Camera camera, Group root) {
-		this.scene = scene;
+	public CameraController(Scene scene2, Camera camera, Group root) {
+		this.scene = scene2;
 		this.camera = camera;
 		this.root = root;
 		listen();
@@ -33,7 +35,7 @@ public class CameraController {
 	public void listen() {
 		
 		scene.setOnMouseDragged(e -> {
-			 double currentX = e.getSceneX();
+			double currentX = e.getSceneX();
             if (currentX - lastXPosition > MIN_FLICK_PIXELS) {
                 root.getTransforms().add(new Rotate(-MOVEMENT_ROT, new Point3D(0,1,0)));
                 lastXPosition = currentX;
@@ -60,11 +62,19 @@ public class CameraController {
 				camera.setTranslateY(camera.getTranslateY() + MOVEMENT_Y);
 			} else if (character.equalsIgnoreCase("x")) {
 				camera.setTranslateY(camera.getTranslateY() - MOVEMENT_Y);
+				
 			}*/
 		});
 		
 		scene.setOnMouseReleased(e -> {
 			
+		});
+		
+		scene.setOnScroll(e -> {
+			double value = e.getDeltaY();
+			int direction = value > 0 ? 1 : -1;
+			camera.setTranslateY(camera.getTranslateY() + direction);
+			camera.setTranslateZ(camera.getTranslateZ() + direction);
 		});
 		
 	}

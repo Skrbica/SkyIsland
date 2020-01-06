@@ -2,12 +2,13 @@ package models;
 
 public class PlatformNet {
 	private int dimension;
-	private boolean[][] freeSpot;
-	private int selectedX, selectedY;
+	private boolean[][] takenSpots;
+	private int selectedX = dimension;
+	private int selectedY = dimension;
 	
 	public PlatformNet(int dimension) {
 		this.dimension = dimension;
-		freeSpot = new boolean[dimension][dimension];
+		takenSpots = new boolean[2 * dimension][2 * dimension];
 	}
 	
 	public void update(int scale) {
@@ -15,16 +16,16 @@ public class PlatformNet {
 		boolean[][] updatedFreeSpot = new boolean[updatedDimension][updatedDimension];
 		for(int i = dimension; i < 2 * dimension; i++) {
 			for(int j = dimension; j < 2 * dimension; j++) {
-				if(freeSpot[i - dimension][j - dimension]) updatedFreeSpot[i][j] = true; 
+				if(takenSpots[i - dimension][j - dimension]) updatedFreeSpot[i][j] = true; 
 			}
 		}
 		
 		dimension = updatedDimension;
-		freeSpot = updatedFreeSpot;
+		takenSpots = updatedFreeSpot;
 	}
 	
 	public boolean isFree(int i, int j) {
-		return freeSpot[i][j];
+		return !takenSpots[i + dimension][j + dimension];
 	}
 	
 	public void deselect() {
@@ -51,5 +52,9 @@ public class PlatformNet {
 	
 	public boolean isSelected() {
 		return selectedX != dimension;
+	}
+	
+	public void occupy(int x, int y) {
+		takenSpots[x + dimension][y + dimension] = true;
 	}
 }

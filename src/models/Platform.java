@@ -48,7 +48,7 @@ public class Platform {
 	
 	private static void select(int x, int y) {
 		net.select(x, y);
-		System.out.println("(" + x + ", " + y + ")");
+		//System.out.println("(" + x + ", " + y + ")");
 	}
 
 	private static void deselect() {
@@ -63,7 +63,7 @@ public class Platform {
 		}
 	}
 	
-	public static void fieldSelected(Node node) {
+	public boolean fieldSelected(Node node) {
 		Box shape = (Box) node;
 		boolean deselect = false;
 		boolean selected = Platform.selectedField != null;
@@ -86,6 +86,8 @@ public class Platform {
 			Platform.selectedField = shape;
 			Platform.select();
 		}
+		
+		return !deselect;
 	}
 	
 	public TransformationParameters getSelectedFieldTransforms() {
@@ -97,5 +99,13 @@ public class Platform {
 	
 	public boolean isSelected() {
 		return net.isSelected();
+	}
+	
+	public boolean occupied(Node node) {
+		return net.isFree((int) (node.getTranslateX() / fieldDimension), (int) (node.getTranslateZ() / fieldDimension));
+	}
+	
+	public void occupy() {
+		net.occupy((int) (selectedField.getTranslateX() / fieldDimension), (int) (selectedField.getTranslateZ() / fieldDimension));
 	}
 }
